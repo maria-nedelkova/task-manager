@@ -145,8 +145,7 @@
   flex-direction: column;
   flex-wrap: wrap;
   align-content: start;
-  padding: 15px;
-  height: 3000px;
+  padding: 15px 15px 10px 15px;
 }
 
 .panel {

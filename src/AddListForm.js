@@ -9,6 +9,7 @@ class AddListForm extends React.Component {
       errors: ['Please, enter list title'],
     }
     this.state = this.initialState
+    this.divAddListForm = React.createRef();
   }
 
   handleChange(event) {
@@ -50,12 +51,16 @@ class AddListForm extends React.Component {
     this.setState(this.initialState)
   }
 
+  componentDidMount(){
+    this.props.pushPanelHeight(0, this.divAddListForm.current.clientHeight)
+  }
+
   render(){
    const { visible } = this.props
    const { title } = this.state
    if(visible){
      return (
-       <div className="panel">
+       <div className="panel" ref={this.divAddListForm}>
          <input className="input list-row"
                 type="text"
                 value={title}
@@ -73,7 +78,7 @@ class AddListForm extends React.Component {
      );
     } else{
      return (
-       <div className="panel add-list">
+       <div className="panel add-list" ref={this.divAddListForm}>
          <div style={{padding: '5px'}}
               onClick={() => this.props.onClick('SetFormVisibility', true)}>
             <i className="fas fa-plus font-icon-r"></i>Add a new list

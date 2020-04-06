@@ -5,6 +5,11 @@ import AddListForm from './AddListForm'
 class PanelContainer extends React.Component {
   constructor(props) {
     super(props);
+    this.panelsHeight = []
+  }
+
+  pushPanelHeight(id, height) {
+    this.panelsHeight.push({id, height})
   }
 
   renderPanels(){
@@ -19,19 +24,25 @@ class PanelContainer extends React.Component {
                onClickTaskBtn={(args) => this.props.onClick(args)}
                onChangeTask={(args) => this.props.onChangeTask(args)}
                onChangeList={(...args) => this.props.onChangeList(args)}
+               pushPanelHeight={(id, height) => this.pushPanelHeight(id, height)}
         />
       );
     });
     return panels
   }
 
+  componentDidMount() {
+    this.props.calculateContainerHeight(this.panelsHeight)
+  }
+
   render(){
-    const { addListVisible } = this.props
+    const { addListVisible, containerHeight } = this.props
     return (
       <div className="bkground">
-        <div className="panel-container">
+        <div className="panel-container" style={{height: containerHeight}}>
           <AddListForm visible={addListVisible}
                         onClick={(...args) => this.props.onClick(args)}
+                        pushPanelHeight={(id, height) => this.pushPanelHeight(id, height)}
           />
           {this.renderPanels()}
           <span className="panel break"></span>

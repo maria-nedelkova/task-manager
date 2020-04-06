@@ -5,6 +5,7 @@ import ContentEditable from 'react-contenteditable'
 class Panel extends React.Component {
   constructor(props) {
     super(props);
+    this.divPanel = React.createRef();
   }
 
   renderTasks(){
@@ -34,6 +35,10 @@ class Panel extends React.Component {
     this.props.onChangeList(id, name)
   }
 
+  componentDidMount(){
+    this.props.pushPanelHeight(this.props.id, this.divPanel.current.clientHeight)
+  }
+
   shouldComponentUpdate(nextProps) {
    const newTasks = nextProps.tasks
    const oldTasks = this.props.tasks
@@ -58,7 +63,7 @@ class Panel extends React.Component {
     //alert('Panel')
     const { id, name }= this.props
     return (
-      <div className="panel">
+      <div className="panel" ref={this.divPanel}>
         <div className="list-header list-row">
           <ContentEditable
               html={name}

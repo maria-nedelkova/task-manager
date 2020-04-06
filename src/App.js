@@ -11,7 +11,8 @@ class App extends React.Component {
       addListVisible: false,
       lastEditedList: '',
       lastEditedTask: '',
-      dropDownVisible: false
+      dropDownVisible: false,
+      containerHeight: '600px'
     };
     this.typingTimerTask = ''
     this.typingTimerList = ''
@@ -192,7 +193,7 @@ class App extends React.Component {
     } else if(buttonType == 'AddTask') {
         const listID = args[1]
         this.addTask(listID)
-    }
+    } 
   }
 
   handleMenuClick() {
@@ -208,8 +209,32 @@ class App extends React.Component {
 
   }
 
+  calculateContainerHeight(panels) {
+    const width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+    const numberOfColumns = width > 1100 ? 4 :
+                            width <= 1100 && width > 900 ? 3 :
+                            width <= 900 && width > 600 ? 2 :
+                            1
+    const defaultHeight =  width > 1100 ? 600 :
+                           width <= 1100 && width > 900 ? 500 :
+                           width <= 900 && width > 600 ? 400 :
+                           300
+    const columnsHeight = []
+    const panelsHeight = panels.map((panel) => {
+        return panel.height
+      })
+    for(let i = 0; i < numberOfColumns; i++) {
+      columnsHeight[i] = calculateColumnHeight(panelsHeight,numberOfColumns,i)
+    }
+    const maxHeight = Math.max(...columnsHeight)
+    const containerHeight = maxHeight > defaultHeight ? maxHeight: defaultHeight
+    this.setState({
+      containerHeight: containerHeight + 'px'
+    });
+  }
+
   render() {
-    const { lists, addListVisible, dropDownVisible } = this.state
+    const { lists, addListVisible, dropDownVisible, containerHeight } = this.state
     const topNavClassName = dropDownVisible ? 'navbar-dark clearfix':'navbar clearfix'
     const dropDownClassName = dropDownVisible ? 'dropdown-menu-visible':'dropdown-menu-hidden'
     const barClassName = dropDownVisible ? 'bar-container bar-to-x':'bar-container'
@@ -234,6 +259,8 @@ class App extends React.Component {
                         onClick={(args) => this.handleClick(args)}
                         onChangeTask={(args) => this.editTask(args)}
                         onChangeList={(args) => this.editListName(args)}
+                        calculateContainerHeight={(panels) => this.calculateContainerHeight(panels)}
+                        containerHeight={containerHeight}
         />
         <footer className="footer">
           <div id="nav_links">
@@ -250,6 +277,17 @@ class App extends React.Component {
 
     );
   }
+}
+
+const calculateColumnHeight = (panelsHeight, numberOfColumns, position) => {
+  let columnHeight = 0
+  const numberOfPanels = panelsHeight.length
+  while(position < numberOfPanels) {
+    columnHeight += panelsHeight[position]
+    columnHeight += 5                                                            //plus margin
+    position += numberOfColumns
+  }
+  return columnHeight + 25                                                      // plus padding
 }
 
 export default App
