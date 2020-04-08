@@ -12,6 +12,12 @@ class PanelContainer extends React.Component {
     this.panelsHeight.push({id, height})
   }
 
+  updatePanelHeight(id, height) {
+    const panel = this.panelsHeight.find(panel => panel.id == id)
+    panel.height = height
+    this.props.calculateContainerHeight(this.panelsHeight)
+  }
+
   renderPanels(){
     const lists = this.props.lists
     const panels = lists.map((list,index) => {
@@ -25,6 +31,7 @@ class PanelContainer extends React.Component {
                onChangeTask={(args) => this.props.onChangeTask(args)}
                onChangeList={(...args) => this.props.onChangeList(args)}
                pushPanelHeight={(id, height) => this.pushPanelHeight(id, height)}
+               updatePanelHeight={(id, height) => this.updatePanelHeight(id, height)}
         />
       );
     });
@@ -33,6 +40,12 @@ class PanelContainer extends React.Component {
 
   componentDidMount() {
     this.props.calculateContainerHeight(this.panelsHeight)
+    const resizeListener = () => window.location.reload(true)
+    window.addEventListener('resize', resizeListener);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', resizeListener);
   }
 
   render(){
@@ -41,8 +54,8 @@ class PanelContainer extends React.Component {
       <div className="bkground">
         <div className="panel-container" style={{height: containerHeight}}>
           <AddListForm visible={addListVisible}
-                        onClick={(...args) => this.props.onClick(args)}
-                        pushPanelHeight={(id, height) => this.pushPanelHeight(id, height)}
+                       onClick={(...args) => this.props.onClick(args)}
+                       pushPanelHeight={(id, height) => this.pushPanelHeight(id, height)}
           />
           {this.renderPanels()}
           <span className="panel break"></span>

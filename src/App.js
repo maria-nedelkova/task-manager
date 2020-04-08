@@ -193,7 +193,7 @@ class App extends React.Component {
     } else if(buttonType == 'AddTask') {
         const listID = args[1]
         this.addTask(listID)
-    } 
+    }
   }
 
   handleMenuClick() {
@@ -220,9 +220,7 @@ class App extends React.Component {
                            width <= 900 && width > 600 ? 400 :
                            300
     const columnsHeight = []
-    const panelsHeight = panels.map((panel) => {
-        return panel.height
-      })
+    const panelsHeight = panels.map(panel => panel.height)
     for(let i = 0; i < numberOfColumns; i++) {
       columnsHeight[i] = calculateColumnHeight(panelsHeight,numberOfColumns,i)
     }

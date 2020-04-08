@@ -6,6 +6,7 @@ class Panel extends React.Component {
   constructor(props) {
     super(props);
     this.divPanel = React.createRef();
+    this.resizeTimer = ''
   }
 
   renderTasks(){
@@ -35,8 +36,14 @@ class Panel extends React.Component {
     this.props.onChangeList(id, name)
   }
 
-  componentDidMount(){
-    this.props.pushPanelHeight(this.props.id, this.divPanel.current.clientHeight)
+  componentDidMount() {
+    const rect = this.divPanel.current.getBoundingClientRect()
+    this.props.pushPanelHeight(this.props.id, rect.height)
+  }
+
+  componentDidUpdate() {
+    const rect = this.divPanel.current.getBoundingClientRect()
+    this.props.updatePanelHeight(this.props.id, rect.height)
   }
 
   shouldComponentUpdate(nextProps) {
@@ -60,7 +67,6 @@ class Panel extends React.Component {
   }
 
   render(){
-    //alert('Panel')
     const { id, name }= this.props
     return (
       <div className="panel" ref={this.divPanel}>

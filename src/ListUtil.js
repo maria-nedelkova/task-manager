@@ -1,10 +1,5 @@
-const getList = (lists, listID) => lists.find(list => {
-    return list.id == listID
-  });
-
-const getTask = (list, taskID) => list.tasks.find(task => {
-    return task.id == taskID
-  });
+const getList = (lists, listID) => lists.find(list => list.id == listID)
+const getTask = (list, taskID) => list.tasks.find(task => task.id == taskID)
 
 const createTask = (id, isDone, text) => {
   return {id, isDone, text}
