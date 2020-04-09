@@ -118,24 +118,27 @@ class App extends React.Component {
 
   addList(name) {
     this.sendRequest().then(id => {
+      const lists = this.state.lists.slice()
+      lists.unshift({id, name, tasks:[]})
       this.setState({
-        lists: [...this.state.lists, {id, name, tasks:[]}]
+        lists: lists
       });
       this.setAddListVisibility(false)
     });
   }
 
   copyList(id) {
-    const lists = this.state.lists
-    const list = lists.find(list => {
-      return list.id == id
-    });
+    const lists = this.state.lists.slice()
+    const list = lists.find(list => list.id == id)
     const newListTasks = list.tasks.slice()
     this.sendRequest().then(newListID => {
+      const index = lists.indexOf(list)
+      lists.splice(index,0,{id: newListID,
+                            name: list.name,
+                            tasks: newListTasks}
+        );
       this.setState({
-        lists: [...lists, {id: newListID,
-                           name: list.name,
-                           tasks: newListTasks}]
+        lists: lists
       });
     });
   }

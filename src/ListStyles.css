@@ -1,11 +1,13 @@
 
 .add-list {
   height: 40px;
+  color: rgb(64, 62, 62) !important;
 }
 
 .add-list:hover {
-  background-color: rgba(103, 95, 95, 0.8);
   cursor: pointer;
+  background-color: #44a347;
+  color: #f9f6f3 !important;
 }
 
 .list-row {

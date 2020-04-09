@@ -51,8 +51,10 @@ class AddListForm extends React.Component {
     this.setState(this.initialState)
   }
 
-  componentDidMount(){
-    this.props.pushPanelHeight(0, this.divAddListForm.current.clientHeight)
+  shouldComponentUpdate(nextProps, nextState) {
+    const differentByVisibility = nextProps.visible != this.props.visible
+    const differentByTitle = nextState.title != this.state.title
+    return differentByVisibility || differentByTitle
   }
 
   render(){
@@ -86,6 +88,16 @@ class AddListForm extends React.Component {
        </div>
      );
    }
+ }
+
+ componentDidMount(){
+   const rect = this.divAddListForm.current.getBoundingClientRect()
+   this.props.pushPanelHeight(0, rect.height)
+ }
+
+ componentDidUpdate() {
+   const rect = this.divAddListForm.current.getBoundingClientRect()
+   this.props.updatePanelHeight(0, rect.height)
  }
 
 }
