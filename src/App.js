@@ -133,7 +133,7 @@ class App extends React.Component {
     const newListTasks = list.tasks.slice()
     this.sendRequest().then(newListID => {
       const index = lists.indexOf(list)
-      lists.splice(index,0,{id: newListID,
+      lists.splice(index + 1,0,{id: newListID,
                             name: list.name,
                             tasks: newListTasks}
         );

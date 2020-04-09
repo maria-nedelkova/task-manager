@@ -56,9 +56,10 @@ class Panel extends React.Component {
   }
 
   render(){
-    const { id, name }= this.props
+    const { id, name, highlight }= this.props
+    const animation = highlight ? {animationName: 'highlight'}:{}
     return (
-      <div className="panel" ref={this.divPanel}>
+        <div className='panel' ref={this.divPanel} style={animation}>
         <div className="list-header list-row">
           <ContentEditable
               html={name}

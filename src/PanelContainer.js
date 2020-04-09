@@ -6,7 +6,8 @@ import {getList} from './ListUtil'
 class PanelContainer extends React.Component {
   constructor(props) {
     super(props);
-    this.panelsHeight = []                                                      // stores heights of each panel. Panel represents a list or the AddListForm
+    this.panelsHeight = []
+    this.highlight = false                                                      // stores heights of each panel. Panel represents a list or the AddListForm
   }
 
   pushPanelHeight(id, height) {
@@ -43,6 +44,7 @@ class PanelContainer extends React.Component {
                id={list.id}
                name={list.name}
                tasks={list.tasks}
+               highlight={this.highlight}
                onClickListBtn={(...args) => this.props.onClick(args)}
                onClickTaskBtn={(args) => this.props.onClick(args)}
                onChangeTask={(args) => this.props.onChangeTask(args)}
@@ -76,6 +78,7 @@ class PanelContainer extends React.Component {
   }
 
   componentDidMount() {
+    this.highlight = true
     const resizeListener = () => window.location.reload(true)
     window.addEventListener('resize', resizeListener);
   }
