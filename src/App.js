@@ -172,31 +172,40 @@ class App extends React.Component {
   }
 
   handleClick(args) {
-    const buttonType = args[0]
-    if(buttonType == 'SetFormVisibility') {
-      const visible = args[1]
-      this.setAddListVisibility(visible)
-    } else if(buttonType == 'AddList') {
+    const buttons = {
+      SetFormVisibility: () => {
+        const visible = args[1]
+        this.setAddListVisibility(visible)
+      },
+      AddList: () => {
         const title = args[1]
         this.addList(title)
-    } else if(buttonType == 'DeleteList') {
+      },
+      CopyList: () => {
+        const id = args[1]
+        this.copyList(id)
+      },
+      DeleteList: () => {
         const id = args[1]
         this.deleteList(id)
-    }  else if(buttonType == 'CopyList') {
-       const id = args[1]
-       this.copyList(id)
-    } else if(buttonType == 'DeleteTask') {
-       const listID = args[1]
-       const taskID = args[2]
-       this.deleteTask(listID, taskID)
-    } else if(buttonType == 'ChangeTaskStatus') {
+      },
+      AddTask: () => {
+        const listID = args[1]
+        this.addTask(listID)
+      },
+      ChangeTaskStatus: () => {
         const listID = args[1]
         const taskID = args[2]
         this.changeTaskStatus(listID, taskID)
-    } else if(buttonType == 'AddTask') {
+      },
+      DeleteTask: () => {
         const listID = args[1]
-        this.addTask(listID)
+        const taskID = args[2]
+        this.deleteTask(listID, taskID)
+      },
     }
+    const buttonType = args[0]
+    buttons[buttonType]()
   }
 
   handleMenuClick() {
@@ -209,7 +218,6 @@ class App extends React.Component {
         dropDownVisible: true
       });
     }
-
   }
 
   calculateContainerHeight(panels) {
