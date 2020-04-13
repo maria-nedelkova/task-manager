@@ -1,0 +1,47 @@
+python manage.py dumpdata note.Note --indent 4 > notes.json
+python manage.py dumpdata note.ListOfNotes --indent 4 > listOfNotes.json
+python manage.py dumpdata auth.User --indent 4 > users.json
+#fixture
+https://stackabuse.com/building-a-graphql-api-with-django/
+
+
+root:123
+
+
+
+//
+mutation createNote {
+  createNote(input: {
+    name: "Walk",
+    text: "i need walk",
+    user: 2,
+    list: 1
+  }) {
+    ok
+    note {
+      id
+      name
+    }
+  }
+}
+
+//
+query getNotes{
+  listOfNotes{
+    id
+  }
+}
+
+mutation create_list_of_notes {
+  createListOfNotes(input: {
+    name: "Created walk",
+    user: 2,
+    order:1
+    }) {
+    ok
+    list {
+      id
+      name
+    }
+  }
+}
