@@ -102,3 +102,11 @@ dist
 
 # TernJS port file
 .tern-port
+.idea/inspectionProfiles/profiles_settings.xml
+.idea/modules.xml
+.idea/task-manager.iml
+.idea/workspace.xml
+back-end/.idea/back-end.iml
+*.pyc
+*.lock
+front-end/package-lock.json
