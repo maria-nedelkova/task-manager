@@ -7,7 +7,7 @@ class PanelContainer extends React.Component {
   constructor(props) {
     super(props);
     this.panelsHeight = []
-    this.highlight = false                                                      // stores heights of each panel. Panel represents a list or the AddListForm
+                                                     // stores heights of each panel. Panel represents a list or the AddListForm
   }
 
   pushPanelHeight(id, height) {
@@ -37,14 +37,14 @@ class PanelContainer extends React.Component {
   }
 
   renderPanels(){
-    const lists = this.props.lists
+    const { lists, highlight } = this.props
     const panels = lists.map((list,index) => {
       return (
         <Panel key={list.id}
                id={list.id}
                name={list.name}
                tasks={list.tasks}
-               highlight={this.highlight}
+               highlight={highlight}
                onClickListBtn={(...args) => this.props.onClick(args)}
                onClickTaskBtn={(args) => this.props.onClick(args)}
                onChangeTask={(args) => this.props.onChangeTask(args)}
@@ -78,7 +78,6 @@ class PanelContainer extends React.Component {
   }
 
   componentDidMount() {
-    this.highlight = true
     const resizeListener = () => window.location.reload(true)
     window.addEventListener('resize', resizeListener);
   }

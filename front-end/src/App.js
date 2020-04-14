@@ -12,7 +12,8 @@ class App extends React.Component {
       lastEditedList: '',
       lastEditedTask: '',
       dropDownVisible: false,
-      containerHeight: '600px'
+      containerHeight: '600px',
+      highlight: false
     };
     this.typingTimerTask = ''
     this.typingTimerList = ''
@@ -60,6 +61,7 @@ class App extends React.Component {
       const updatedLists = replaceArrItem(this.state.lists, list, newList)
       this.setState({
         lists: updatedLists,
+        highlight: false
       });
     });
   }
@@ -77,7 +79,8 @@ class App extends React.Component {
     const lastEditedTask = this.state.lastEditedTask
     this.setState({
       lists: updatedLists,
-      lastEditedTask: task.id
+      lastEditedTask: task.id,
+      highlight: false
     });
     if(lastEditedTask == task.id) {
       clearTimeout(this.typingTimerTask);
@@ -95,7 +98,8 @@ class App extends React.Component {
       const newList = createList(list.id, list.name, updatedTasks)
       const updatedLists = replaceArrItem(this.state.lists, list, newList)
       this.setState({
-        lists: updatedLists
+        lists: updatedLists,
+        highlight: false
       });
     });
 
@@ -110,7 +114,8 @@ class App extends React.Component {
       const newList = createList(list.id, list.name, updatedTasks)
       const updatedLists = replaceArrItem(this.state.lists, list, newList)
       this.setState({
-        lists: updatedLists
+        lists: updatedLists,
+        highlight: false
       });
     });
 
@@ -121,7 +126,8 @@ class App extends React.Component {
       const lists = this.state.lists.slice()
       lists.unshift({id, name, tasks:[]})
       this.setState({
-        lists: lists
+        lists: lists,
+        highlight: true
       });
       this.setAddListVisibility(false)
     });
@@ -138,7 +144,8 @@ class App extends React.Component {
                             tasks: newListTasks}
         );
       this.setState({
-        lists: lists
+        lists: lists,
+        highlight: true
       });
     });
   }
@@ -163,7 +170,8 @@ class App extends React.Component {
     const lastEditedList = this.state.lastEditedList
     this.setState({
       lists: updatedLists,
-      lastEditedList: list.id
+      lastEditedList: list.id,
+      highlight: false
     });
     if(lastEditedList == list.id) {
       clearTimeout(this.typingTimerList);
@@ -243,7 +251,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { lists, addListVisible, dropDownVisible, containerHeight } = this.state
+    const { lists, addListVisible, dropDownVisible, containerHeight, highlight } = this.state
     const topNavClassName = dropDownVisible ? 'navbar-dark clearfix':'navbar clearfix'
     const dropDownClassName = dropDownVisible ? 'dropdown-menu-visible':'dropdown-menu-hidden'
     const barClassName = dropDownVisible ? 'bar-container bar-to-x':'bar-container'
@@ -270,6 +278,7 @@ class App extends React.Component {
                         onChangeList={(args) => this.editListName(args)}
                         calculateContainerHeight={(panels) => this.calculateContainerHeight(panels)}
                         containerHeight={containerHeight}
+                        highlight={highlight}
         />
         <footer className="footer">
           <div id="nav_links">
