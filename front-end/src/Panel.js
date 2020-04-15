@@ -1,6 +1,8 @@
 import React from 'react'
 import Task from './Task'
 import ContentEditable from 'react-contenteditable'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash, faCopy, faPlus } from '@fortawesome/free-solid-svg-icons'
 
 class Panel extends React.Component {
   constructor(props) {
@@ -68,17 +70,18 @@ class Panel extends React.Component {
             />
           <div className="list-btn"
                onClick={() => this.props.onClickListBtn('DeleteList', id)}>
-            <i className="fas fa-trash btn-icon-pos"></i>
+            <FontAwesomeIcon icon={faTrash} className="btn-icon"/>
           </div>
           <div className="list-btn"
                onClick={() => this.props.onClickListBtn('CopyList', id)}>
-            <i className="fas fa-copy btn-icon-pos"></i>
+            <FontAwesomeIcon icon={faCopy} className="btn-icon"/>
           </div>
         </div>
         {this.renderTasks()}
-        <div className="add-task list-row"
+        <div className="add-task-btn list-row"
              onClick={() => this.props.onClickListBtn('AddTask', id)}>
-          <i className="fas fa-plus font-icon-r"></i>Add a task
+          <FontAwesomeIcon icon={faPlus} className="plus-icon"/>
+   		    <div className="add-text">Add a task</div>
         </div>
      </div>
     );

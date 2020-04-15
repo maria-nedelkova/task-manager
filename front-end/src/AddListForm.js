@@ -1,5 +1,7 @@
 import React from 'react'
 import Swal from 'sweetalert2'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimes, faPlus } from '@fortawesome/free-solid-svg-icons'
 
 class AddListForm extends React.Component {
   constructor(props) {
@@ -73,18 +75,19 @@ class AddListForm extends React.Component {
          <button className="green-btn"
                  onClick={() => this.handleAddList()}>Add List
          </button>
-         <i className="fas fa-times cross"
-            onClick={() => this.handleCross()}>
-         </i>
+         <FontAwesomeIcon icon={faTimes}
+                          className="cross"
+                          onClick={() => this.handleCross()}
+         />
        </div>
      );
     } else{
      return (
-       <div className="panel add-list" ref={this.divAddListForm}>
-         <div style={{padding: '5px'}}
-              onClick={() => this.props.onClick('SetFormVisibility', true)}>
-            <i className="fas fa-plus font-icon-r"></i>Add a new list
-         </div>
+       <div className="add-list panel"
+            ref={this.divAddListForm}
+            onClick={() => this.props.onClick('SetFormVisibility', true)}>
+         <FontAwesomeIcon icon={faPlus} className="plus-icon"/>
+  			 <div className="add-text">Add a new list</div>
        </div>
      );
    }

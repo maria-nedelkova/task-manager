@@ -1,6 +1,8 @@
 import React from 'react'
 import PanelContainer from './PanelContainer'
 import {getList, getTask, createTask, createList, replaceArrItem} from './ListUtil'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEarlybirds } from '@fortawesome/free-brands-svg-icons'
 
 
 class App extends React.Component {
@@ -259,7 +261,7 @@ class App extends React.Component {
       <div style={{height: '100%'}}>
         <div className={topNavClassName}>
           <div className="logo">
-            <i className="fab fa-earlybirds"></i>Task Manager
+            <FontAwesomeIcon icon={faEarlybirds}/>Task Manager
           </div>
           <div className={barClassName} onClick={() => this.handleMenuClick()}>
             <div className="bar1"></div>

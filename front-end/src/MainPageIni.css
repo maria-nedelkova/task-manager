@@ -156,8 +156,8 @@ body, html {
 }
 
 @media screen and (max-width: 600px) {
-	.dropdown-menu a {
-		font-size: 23px;
+	.dropdown-menu-visible a {
+		font-size: 25px;
 	}
 	.logo {
 		font-size: 25px;

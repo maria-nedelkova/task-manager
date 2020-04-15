@@ -1,5 +1,7 @@
 import React from 'react'
 import ContentEditable from 'react-contenteditable'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash, faCheck } from '@fortawesome/free-solid-svg-icons'
 
 class Task extends React.Component {
   constructor(props) {
@@ -39,11 +41,11 @@ class Task extends React.Component {
           />
         <div className="list-btn"
              onClick={() => this.props.onClick('DeleteTask', listID, id)}>
-          <i className="fas fa-trash btn-icon-pos"></i>
+          <FontAwesomeIcon icon={faTrash} className="btn-icon"/>
         </div>
         <div className="list-btn"
              onClick={() => this.props.onClick('ChangeTaskStatus', listID, id)}>
-          <i className="fas fa-check btn-icon-pos"></i>
+          <FontAwesomeIcon icon={faCheck} className="btn-icon"/>
         </div>
       </div>
     );
