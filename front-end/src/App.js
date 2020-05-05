@@ -69,9 +69,7 @@ class App extends React.Component {
   }
 
   editTask(args) {
-    const listID = args[0]
-    const taskID = args[1]
-    const text = args[2]
+    const [listID, taskID, text] = args
     const list = getList(this.state.lists, listID)
     const task = getTask(list, taskID)
     const newTask = createTask(task.id, task.isDone, text)
@@ -164,8 +162,7 @@ class App extends React.Component {
   }
 
   editListName(args) {
-    const id = args[0]
-    const name = args[1]
+    const [id, name] = args
     const list = getList(this.state.lists, id)
     const newList = createList(list.id, name, list.tasks)
     const updatedLists = replaceArrItem(this.state.lists, list, newList)
@@ -204,13 +201,11 @@ class App extends React.Component {
         this.addTask(listID)
       },
       ChangeTaskStatus: () => {
-        const listID = args[1]
-        const taskID = args[2]
+        const [,listID, taskID] = args
         this.changeTaskStatus(listID, taskID)
       },
       DeleteTask: () => {
-        const listID = args[1]
-        const taskID = args[2]
+        const [,listID, taskID] = args
         this.deleteTask(listID, taskID)
       },
     }
