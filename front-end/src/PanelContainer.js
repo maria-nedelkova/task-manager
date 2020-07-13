@@ -1,7 +1,6 @@
 import React from 'react'
 import Panel from './Panel'
 import AddListForm from './AddListForm'
-import {getList} from './ListUtil'
 
 class PanelContainer extends React.Component {
   constructor(props) {
@@ -18,7 +17,7 @@ class PanelContainer extends React.Component {
     if(pushIsCompleted) {
       if(panelsHeight[panelsHeight.length-1].id != lists[lists.length-1].id) {  // a list was added in the beginning or in the middele of lists
         const pushedItem = panelsHeight.pop()                                   // it means panelsHeight should be adjusted. Order is important for correct layout rendering.
-        const index = lists.indexOf(getList(lists,id))                          // find a position, where a pushed item should be placed
+        const index = lists.indexOf(lists.find(list => list.id == id))                          // find a position, where a pushed item should be placed
         panelsHeight.splice(index + 1,0,pushedItem)                             // plus 1, since panelsHeight always starts with AddListForm item
       }
       this.props.calculateContainerHeight(panelsHeight)
