@@ -1,6 +1,5 @@
 import React from 'react'
 import PanelContainer from './PanelContainer'
-import {getList, getTask, createTask, createList, replaceArrItem} from './ListUtil'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEarlybirds } from '@fortawesome/free-brands-svg-icons'
 
@@ -56,11 +55,10 @@ class App extends React.Component {
 
   addTask(listID) {
     this.sendRequest().then(id => {
-      const list = getList(this.state.lists, listID)
-      const newTask = createTask(id, false, '')
-      const updatedTasks = [...list.tasks, newTask]
-      const newList = createList(list.id, list.name, updatedTasks)
-      const updatedLists = replaceArrItem(this.state.lists, list, newList)
+      const lists = this.state.lists
+      const list = lists.find(list => list.id == listID)
+      const updatedTasks = [...list.tasks, {id, isDone: false, text:''}]
+      const updatedLists = lists.map(list => list.id == listID ? {...list, tasks: updatedTasks}:list)
       this.setState({
         lists: updatedLists,
         highlight: false
@@ -68,14 +66,12 @@ class App extends React.Component {
     });
   }
 
-  editTask(args) {
-    const [listID, taskID, text] = args
-    const list = getList(this.state.lists, listID)
-    const task = getTask(list, taskID)
-    const newTask = createTask(task.id, task.isDone, text)
-    const updatedTasks = replaceArrItem(list.tasks, task, newTask)
-    const newList = createList(list.id, list.name, updatedTasks)
-    const updatedLists = replaceArrItem(this.state.lists, list, newList)
+  editTask([listID, taskID, text]) {
+    const lists = this.state.lists
+    const list = lists.find(list => list.id == listID)
+    const task = list.tasks.find(task => task.id == taskID)
+    const updatedTasks = list.tasks.map(task => task.id == taskID ? {...task, text}:task)
+    const updatedLists = lists.map(list => list.id == listID ? {...list, tasks: updatedTasks}:list)
     const lastEditedTask = this.state.lastEditedTask
     this.setState({
       lists: updatedLists,
@@ -91,12 +87,10 @@ class App extends React.Component {
 
   deleteTask(listID, taskID) {
     this.sendRequest().then(status => {
-      const list = getList(this.state.lists, listID)
-      const updatedTasks = list.tasks.filter(task => {
-        return task.id != taskID
-      });
-      const newList = createList(list.id, list.name, updatedTasks)
-      const updatedLists = replaceArrItem(this.state.lists, list, newList)
+      const lists = this.state.lists
+      const list = lists.find(list => list.id == listID)
+      const updatedTasks = list.tasks.filter(task => task.id != taskID)
+      const updatedLists = lists.map(list => list.id == listID ? {...list, tasks: updatedTasks}:list)
       this.setState({
         lists: updatedLists,
         highlight: false
@@ -107,19 +101,18 @@ class App extends React.Component {
 
   changeTaskStatus(listID, taskID) {
     this.sendRequest().then(status => {
-      const list = getList(this.state.lists, listID)
-      const task = getTask(list, taskID)
-      const newTask = createTask(task.id, !task.isDone, task.text)
-      const updatedTasks = replaceArrItem(list.tasks, task, newTask)
-      const newList = createList(list.id, list.name, updatedTasks)
-      const updatedLists = replaceArrItem(this.state.lists, list, newList)
+      const lists = this.state.lists
+      const list = lists.find(list => list.id == listID)
+      const task = list.tasks.find(task => task.id == taskID)
+      const updatedTasks = list.tasks.map(task => task.id == taskID ? {...task, isDone: !task.isDone}:task)
+      const updatedLists = lists.map(list => list.id == listID ? {...list, tasks: updatedTasks}:list)
       this.setState({
         lists: updatedLists,
         highlight: false
       });
     });
 
-  }
+  } 
 
   addList(name) {
     this.sendRequest().then(id => {
@@ -140,8 +133,8 @@ class App extends React.Component {
     this.sendRequest().then(newListID => {
       const index = lists.indexOf(list)
       lists.splice(index + 1,0,{id: newListID,
-                            name: list.name,
-                            tasks: newListTasks}
+                                name: list.name,
+                                tasks: newListTasks}
         );
       this.setState({
         lists: lists,
@@ -154,18 +147,15 @@ class App extends React.Component {
     this.sendRequest().then(status => {
       const lists = this.state.lists
       this.setState({
-        lists: lists.filter(list => {
-              return list.id !== id
-        }),
+        lists: lists.filter(list => list.id !== id)
       });
     });
   }
 
-  editListName(args) {
-    const [id, name] = args
-    const list = getList(this.state.lists, id)
-    const newList = createList(list.id, name, list.tasks)
-    const updatedLists = replaceArrItem(this.state.lists, list, newList)
+  editListName([id, name]) {
+    const lists = this.state.lists
+    const list = lists.find(list => list.id == id)
+    const updatedLists = lists.map(list => list.id == id ? {...list, name}:list)
     const lastEditedList = this.state.lastEditedList
     this.setState({
       lists: updatedLists,
