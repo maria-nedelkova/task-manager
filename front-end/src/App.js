@@ -20,49 +20,25 @@ class App extends React.Component {
     this.typingTimerList = ''
   }
 
-  sendRequest(method, url) {
-/*
-    (login) => {
-      return fetch(`//api.github.com/users/${login}`)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(response.statusText)
-          }
-          return response.json()
-        })
-        .catch(error => {
-          Swal.showValidationMessage(
-            `Request failed: ${error}`
-          )
-        })
-      }
-*/
-
-    return new Promise((resolve,reject) => {
-      let response
-      setTimeout(() => {
-        response = Math.random()
-        resolve(response)
-        },2000)
-    });
-  }
-
   setAddListVisibility(visible) {
     this.setState({
       addListVisible: visible
     });
   }
 
+  generateId() {
+    return Math.random().toString(36).substr(2, 9)
+  }
+
   addTask(listID) {
-    this.sendRequest().then(id => {
-      const lists = this.state.lists
-      const list = lists.find(list => list.id == listID)
-      const updatedTasks = [...list.tasks, {id, isDone: false, text:''}]
-      const updatedLists = lists.map(list => list.id == listID ? {...list, tasks: updatedTasks}:list)
-      this.setState({
-        lists: updatedLists,
-        highlight: false
-      });
+    const id = this.generateId()
+    const lists = this.state.lists
+    const list = lists.find(list => list.id == listID)
+    const updatedTasks = [...list.tasks, { id, isDone: false, text: '' }]
+    const updatedLists = lists.map(list => list.id == listID ? { ...list, tasks: updatedTasks } : list)
+    this.setState({
+      lists: updatedLists,
+      highlight: false
     });
   }
 
@@ -78,15 +54,9 @@ class App extends React.Component {
       lastEditedTask: task.id,
       highlight: false
     });
-    if(lastEditedTask == task.id) {
-      clearTimeout(this.typingTimerTask);
-    }
-    this.typingTimerTask = setTimeout(() => {this.sendRequest().then((status) => {alert(status)})}, 5000)
-
   }
 
   deleteTask(listID, taskID) {
-    this.sendRequest().then(status => {
       const lists = this.state.lists
       const list = lists.find(list => list.id == listID)
       const updatedTasks = list.tasks.filter(task => task.id != taskID)
@@ -95,12 +65,9 @@ class App extends React.Component {
         lists: updatedLists,
         highlight: false
       });
-    });
-
   }
 
   changeTaskStatus(listID, taskID) {
-    this.sendRequest().then(status => {
       const lists = this.state.lists
       const list = lists.find(list => list.id == listID)
       const task = list.tasks.find(task => task.id == taskID)
@@ -110,12 +77,10 @@ class App extends React.Component {
         lists: updatedLists,
         highlight: false
       });
-    });
-
   } 
 
   addList(name) {
-    this.sendRequest().then(id => {
+    const id = this.generateId();
       const lists = this.state.lists.slice()
       lists.unshift({id, name, tasks:[]})
       this.setState({
@@ -123,33 +88,29 @@ class App extends React.Component {
         highlight: true
       });
       this.setAddListVisibility(false)
-    });
   }
 
   copyList(id) {
     const lists = this.state.lists.slice()
     const list = lists.find(list => list.id == id)
     const newListTasks = list.tasks.slice()
-    this.sendRequest().then(newListID => {
       const index = lists.indexOf(list)
-      lists.splice(index + 1,0,{id: newListID,
-                                name: list.name,
-                                tasks: newListTasks}
-        );
+      lists.splice(index + 1, 0, {
+        id: this.generateId(),
+        name: list.name,
+        tasks: newListTasks
+      })
       this.setState({
         lists: lists,
         highlight: true
       });
-    });
   }
 
   deleteList(id) {
-    this.sendRequest().then(status => {
       const lists = this.state.lists
       this.setState({
         lists: lists.filter(list => list.id !== id)
       });
-    });
   }
 
   editListName([id, name]) {
@@ -162,10 +123,6 @@ class App extends React.Component {
       lastEditedList: list.id,
       highlight: false
     });
-    if(lastEditedList == list.id) {
-      clearTimeout(this.typingTimerList);
-    }
-    this.typingTimerList = setTimeout(() => {this.sendRequest().then((status) => {alert(status)})}, 5000)
   }
 
   handleClick(args) {
@@ -281,6 +238,17 @@ class App extends React.Component {
       </div>
 
     );
+  }
+
+  componentDidMount() {
+    const saved = JSON.parse(localStorage.getItem('todoLists') || '[]')
+    this.setState({
+      lists: saved
+    });
+  }
+
+  componentDidUpdate() {
+    localStorage.setItem('todoLists', JSON.stringify(this.state.lists))
   }
 }
 
