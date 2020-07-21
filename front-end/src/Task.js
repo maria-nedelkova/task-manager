@@ -1,56 +1,45 @@
-import React from 'react'
+import React, { useRef, useEffect, useContext } from 'react'
 import ContentEditable from 'react-contenteditable'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faCheck } from '@fortawesome/free-solid-svg-icons'
+import { Context } from './context'
 
-class Task extends React.Component {
-  constructor(props) {
-    super(props);
-    this.contentEditable = React.createRef();
-  }
+export const Task = props => {
 
-  handleChange(event, listID, id) {
-    const text = event.target.innerHTML
-    this.props.onChange(listID, id, text)
-  }
+  const { id, listID, isDone, text } = props
+  const contentClassName = isDone ? 'text-area-green' : 'text-area'
+  const disabled = isDone ? true : false
+  const contentEditable = useRef(null);
+  const { deleteTask, changeTaskStatus, editTask } = useContext(Context)
 
-  shouldComponentUpdate(nextProps) {
-    const differentByTaskStatus = nextProps.isDone != this.props.isDone
-    const differentByText = nextProps.text != this.props.text
-    return differentByTaskStatus || differentByText
-  }
-
-  componentDidMount() {
-    if(!this.props.text) {
-      this.contentEditable.current.focus();
+  useEffect(() => {
+    if (!contentEditable.current.innerText) {
+      contentEditable.current.focus();
     }
+  }, [])
+
+  const handleChange = (listID, id, event) => {
+    const text = event.target.value
+    editTask(listID, id, text)
   }
 
-  render(){
-    const { id, listID, isDone, text } = this.props
-    const contentClassName = isDone ? 'text-area-green':'text-area'
-    const disabled = isDone ? true:false
-    return (
-      <div className="list-row">
-        <ContentEditable
-            innerRef={this.contentEditable}
-            html={text}
-            disabled={disabled}
-            className={contentClassName}
-            onChange={() => {this.handleChange(event, listID, id)}}
-          />
-        <div className="list-btn"
-             onClick={() => this.props.onClick('DeleteTask', listID, id)}>
-          <FontAwesomeIcon icon={faTrash} className="btn-icon"/>
-        </div>
-        <div className="list-btn"
-             onClick={() => this.props.onClick('ChangeTaskStatus', listID, id)}>
-          <FontAwesomeIcon icon={faCheck} className="btn-icon"/>
-        </div>
+  return (
+    <div className="list-row">
+      <ContentEditable
+        innerRef={contentEditable}
+        html={text}
+        disabled={disabled}
+        className={contentClassName}
+        onChange={handleChange.bind(null, listID, id)}
+      />
+      <div className="list-btn"
+        onClick={deleteTask.bind(null,listID, id)}>
+        <FontAwesomeIcon icon={faTrash} className="btn-icon" />
       </div>
-    );
-  }
-
+      <div className="list-btn"
+        onClick={changeTaskStatus.bind(null,listID, id)}>
+        <FontAwesomeIcon icon={faCheck} className="btn-icon" />
+      </div>
+    </div>
+  );
 }
-
-export default Task

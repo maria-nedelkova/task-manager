@@ -71,9 +71,20 @@
   float: left;
   height: 30px;
   padding: 8px;
-  font-weight: bold;
-  outline: none;
   cursor: pointer;
+  font-weight: bold;
+  color:rgb(64, 62, 62);
+  font-size: 15px;
+  background-color: rgba(103, 95, 95, 0);
+  border: none;
+  outline: none;
+}
+
+::placeholder {
+  color: rgb(64, 62, 62);
+  text-size: 10px !important;
+  font-weight: normal !important;
+  opacity: 1; /* Firefox */
 }
 
 .list-btn, .task-btn {
@@ -166,7 +177,8 @@
   width: 24.7%;
   padding: 5px;
   background-color: rgba(103, 95, 95, 0.5);
-  color: rgb(41, 38, 38);
+  /*color: rgb(41, 38, 38);*/
+  color: rgb(64, 62, 62);
   font-size: 16px;
   animation-duration: 1.5s;
  }
@@ -176,6 +188,7 @@
    50% {background-color: #44a347;}
    100% {background-color: rgba(103, 95, 95, 0.5);}
  }
+
 
 .panel:nth-of-type(4n+1) { order: 1; }
 .panel:nth-of-type(4n+2) { order: 2; }

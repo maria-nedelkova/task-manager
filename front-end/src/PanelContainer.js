@@ -1,90 +1,109 @@
-import React from 'react'
-import Panel from './Panel'
-import AddListForm from './AddListForm'
+import React, { useState, useEffect } from 'react'
+import { Panel } from './Panel'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
-class PanelContainer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.panelsHeight = []
-                                                     // stores heights of each panel. Panel represents a list or the AddListForm
+export const PanelContainer = ({ lists, panelToHighlight, onAdd }) => {
+
+  const panelHeightsTemp = []
+  const [panelHeights, setPanelHeights] = useState([])
+
+  useEffect(() => {
+    const resizeListener = () => window.location.reload(true)
+    window.addEventListener('resize', resizeListener)
+    return () => {
+      window.removeEventListener('resize', resizeListener);
+    }
+  }, [])
+
+  const calculateColumnHeight = (panelsHeight, numberOfColumns, position) => {
+    let columnHeight = 0
+    const numberOfPanels = panelsHeight.length
+    while (position < numberOfPanels) {
+      columnHeight += panelsHeight[position]
+      columnHeight += 5                                                            //plus margin
+      position += numberOfColumns
+    }
+    return columnHeight + 25                                                      // plus padding
   }
 
-  pushPanelHeight(id, height) {
-    const panelsHeight = this.panelsHeight
-    const lists = this.props.lists
-    panelsHeight.push({id, height})
-    const pushIsCompleted = panelsHeight.length > lists.length                  // panelsHeight always has 1 more item - AddListForm
-    if(pushIsCompleted) {
-      if(panelsHeight[panelsHeight.length-1].id != lists[lists.length-1].id) {  // a list was added in the beginning or in the middele of lists
-        const pushedItem = panelsHeight.pop()                                   // it means panelsHeight should be adjusted. Order is important for correct layout rendering.
-        const index = lists.indexOf(lists.find(list => list.id == id))                          // find a position, where a pushed item should be placed
-        panelsHeight.splice(index + 1,0,pushedItem)                             // plus 1, since panelsHeight always starts with AddListForm item
+  const calculateContainerHeight = panels => {
+    const width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+    const numberOfColumns = width > 1100 ? 4 :
+      width <= 1100 && width > 900 ? 3 :
+        width <= 900 && width > 600 ? 2 :
+          1
+    const defaultHeight = width > 1100 ? 600 :
+      width <= 1100 && width > 900 ? 500 :
+        width <= 900 && width > 600 ? 400 :
+          300
+    const columnsHeight = []
+    const heights = panels.map(panel => panel.height)
+    heights.unshift(40) // the first static panel
+    for (let i = 0; i < numberOfColumns; i++) {
+      columnsHeight[i] = calculateColumnHeight(heights, numberOfColumns, i)
+    }
+    const maxHeight = Math.max(...columnsHeight)
+    const containerHeight = maxHeight > defaultHeight ? maxHeight : defaultHeight
+    return containerHeight  
+  }
+
+  const pushPanelHeight = (id, height) => {
+    panelHeightsTemp.push({id, height})
+    if(panelHeightsTemp.length == lists.length) { //change state only once, after all panel heights have been pushed
+      setPanelHeights(panelHeightsTemp)
+    }
+    if(panelHeightsTemp.length == 1 && panelHeights.length) { //some panel is changed or new one is added
+      const panel = panelHeights.find(panel => panel.id == id)
+      if(panel) {
+        const updatedPanelHeights = panelHeights.map(panel => panel.id == id ? { ...panel, height} : panel)
+        setPanelHeights(updatedPanelHeights)
+      } else {
+        const addedList = lists.find(list => list.id == id)
+        const index = lists.indexOf(addedList)
+        const updatedPanelHeights = panelHeights.slice()
+        updatedPanelHeights.splice(index,0,{id,height})
+        setPanelHeights(updatedPanelHeights)
       }
-      this.props.calculateContainerHeight(panelsHeight)
     }
   }
 
-  updatePanelHeight(id, height) {
-    const panel = this.panelsHeight.find(panel => panel.id == id)
-    panel.height = height
-    this.props.calculateContainerHeight(this.panelsHeight)
+  const deletePanelHeight = id => {
+      const updatedPanelHeights = panelHeights.filter(panel => panel.id !== id)
+      setPanelHeights(updatedPanelHeights)
   }
 
-  deletePanelHeight(id) {
-    this.panelsHeight = this.panelsHeight.filter(panel => panel.id !== id)
-    this.props.calculateContainerHeight(this.panelsHeight)
-  }
-
-  renderPanels(){
-    const { lists, highlight } = this.props
-    const panels = lists.map((list,index) => {
+  const renderPanels = () => {
+    const panels = lists.map((list, index) => {
+      const highlight = list.id == panelToHighlight ? true : false
       return (
         <Panel key={list.id}
-               id={list.id}
-               name={list.name}
-               tasks={list.tasks}
-               highlight={highlight}
-               onClickListBtn={(...args) => this.props.onClick(args)}
-               onClickTaskBtn={(args) => this.props.onClick(args)}
-               onChangeTask={(args) => this.props.onChangeTask(args)}
-               onChangeList={(...args) => this.props.onChangeList(args)}
-               pushPanelHeight={(id, height) => this.pushPanelHeight(id, height)}
-               updatePanelHeight={(id, height) => this.updatePanelHeight(id, height)}
-               deletePanelHeight={(id) => this.deletePanelHeight(id)}
+          id={list.id}
+          name={list.name}
+          tasks={list.tasks}
+          highlight={highlight}
+          pushPanelHeight={pushPanelHeight}
+          deletePanelHeight={deletePanelHeight}
         />
       );
     });
     return panels
   }
 
-  render(){
-    const { addListVisible, containerHeight } = this.props
-    return (
-      <div className="bkground">
-        <div className="panel-container" style={{height: containerHeight}}>
-          <AddListForm visible={addListVisible}
-                       onClick={(...args) => this.props.onClick(args)}
-                       pushPanelHeight={(id, height) => this.pushPanelHeight(id, height)}
-                       updatePanelHeight={(id, height) => this.updatePanelHeight(id, height)}
-          />
-          {this.renderPanels()}
-          <span className="panel break"></span>
-          <span className="panel break"></span>
-          <span className="panel break"></span>
+  return (
+    <div className="bkground">
+      <div className="panel-container" style={{ height: calculateContainerHeight(panelHeights)}}>
+        <div className="add-list panel"
+          onClick={onAdd.bind(null)}>
+          <FontAwesomeIcon icon={faPlus} className="plus-icon" />
+          <div className="add-text">Add a new list</div>
         </div>
+        {renderPanels()}
+        <span className="panel break"></span>
+        <span className="panel break"></span>
+        <span className="panel break"></span>
       </div>
-    );
-  }
-
-  componentDidMount() {
-    const resizeListener = () => window.location.reload(true)
-    window.addEventListener('resize', resizeListener);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', resizeListener);
-  }
-
+    </div>
+  );
 }
 
-export default PanelContainer
