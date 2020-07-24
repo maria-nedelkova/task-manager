@@ -116,8 +116,8 @@ export const App = () => {
           <div className="bar3"></div>
         </div>
         <div className={dropDownClassName}>
-          <a href="#">Change Password</a>
-          <a href="#">Log Out</a>
+          <a href="#">About</a>
+          <a href="#">My Tasks</a>
         </div>
       </div>
       <PanelContainer lists={lists}
@@ -126,8 +126,8 @@ export const App = () => {
       />
       <footer className="footer">
         <div id="nav_links">
-          <a href="#change password">Change Password</a>
-          <a href="#logout">Log Out</a>
+          <a href="#my_tasks">My Tasks</a>
+          <a href="#about">About</a>
         </div>
         <div id="contact">
           <p><i className="fas fa-map-marker-alt font-icon-r"></i>Stockholm, Sweden</p>

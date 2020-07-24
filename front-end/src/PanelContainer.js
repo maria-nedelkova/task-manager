@@ -21,7 +21,7 @@ export const PanelContainer = ({ lists, panelToHighlight, onAdd }) => {
     const numberOfPanels = panelsHeight.length
     while (position < numberOfPanels) {
       columnHeight += panelsHeight[position]
-      columnHeight += 5                                                            //plus margin
+      columnHeight += 15                                                            //plus margin
       position += numberOfColumns
     }
     return columnHeight + 25                                                      // plus padding
@@ -91,8 +91,8 @@ export const PanelContainer = ({ lists, panelToHighlight, onAdd }) => {
   }
 
   return (
-    <div className="bkground">
-      <div className="panel-container" style={{ height: calculateContainerHeight(panelHeights)}}>
+    <div className="bkground panel-container" style={{ height: calculateContainerHeight(panelHeights)}}>
+      
         <div className="add-list panel"
           onClick={onAdd.bind(null)}>
           <FontAwesomeIcon icon={faPlus} className="plus-icon" />
@@ -102,7 +102,7 @@ export const PanelContainer = ({ lists, panelToHighlight, onAdd }) => {
         <span className="panel break"></span>
         <span className="panel break"></span>
         <span className="panel break"></span>
-      </div>
+    
     </div>
   );
 }

@@ -13,9 +13,7 @@ export const Task = props => {
   const { deleteTask, changeTaskStatus, editTask } = useContext(Context)
 
   useEffect(() => {
-    if (!contentEditable.current.innerText) {
-      contentEditable.current.focus();
-    }
+    contentEditable.current.focus({preventScroll:false});
   }, [])
 
   const handleChange = (listID, id, event) => {
