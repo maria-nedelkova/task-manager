@@ -13,7 +13,7 @@ export const Task = props => {
   const { deleteTask, changeTaskStatus, editTask } = useContext(Context)
 
   useEffect(() => {
-    contentEditable.current.focus({preventScroll:false});
+    contentEditable.current.focus({ preventScroll: false });
   }, [])
 
   const handleChange = (listID, id, event) => {
@@ -31,11 +31,11 @@ export const Task = props => {
         onChange={handleChange.bind(null, listID, id)}
       />
       <div className="list-btn"
-        onClick={deleteTask.bind(null,listID, id)}>
+        onClick={deleteTask.bind(null, listID, id)}>
         <FontAwesomeIcon icon={faTrash} className="btn-icon" />
       </div>
       <div className="list-btn"
-        onClick={changeTaskStatus.bind(null,listID, id)}>
+        onClick={changeTaskStatus.bind(null, listID, id)}>
         <FontAwesomeIcon icon={faCheck} className="btn-icon" />
       </div>
     </div>
