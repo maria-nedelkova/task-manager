@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { PanelContainer } from '../PanelContainer'
+import { PanelContainer } from '../components/PanelContainer'
 import { Context } from '../context'
 
 export const MyTasksPage = () => {
-
   const [lists, setLists] = useState([])
   const [panelToHighlight, setPanelToHighlight] = useState('')
 
   useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem('todoLists') || '[]')
-    setLists(saved)
+    const saved = JSON.parse(localStorage.getItem('todoLists') || '[]');
+    setLists(saved);
   }, [])
 
   useEffect(() => {
@@ -25,8 +24,8 @@ export const MyTasksPage = () => {
     const list = lists.find(list => list.id == listID)
     const updatedTasks = [...list.tasks, { id, isDone: false, text: '' }]
     const updatedLists = lists.map(list => list.id == listID ? { ...list, tasks: updatedTasks } : list)
-      setLists(updatedLists)
-      setPanelToHighlight('')
+    setLists(updatedLists)
+    setPanelToHighlight('')
 
   }
 
@@ -76,8 +75,8 @@ export const MyTasksPage = () => {
       name: listToCopy.name,
       tasks: tasksToCopy
     })
-      setLists(updatedLists)
-      setPanelToHighlight(newListId)
+    setLists(updatedLists)
+    setPanelToHighlight(newListId)
   }
 
   const deleteList = id => {

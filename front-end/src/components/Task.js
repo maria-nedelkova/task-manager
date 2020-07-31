@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useContext } from 'react'
 import ContentEditable from 'react-contenteditable'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faCheck } from '@fortawesome/free-solid-svg-icons'
-import { Context } from './context'
+import { Context } from '../context'
 
 export const Task = props => {
 
@@ -13,7 +13,7 @@ export const Task = props => {
   const { deleteTask, changeTaskStatus, editTask } = useContext(Context)
 
   useEffect(() => {
-    contentEditable.current.focus({ preventScroll: false });
+    contentEditable.current.focus();
   }, [])
 
   const handleChange = (listID, id, event) => {

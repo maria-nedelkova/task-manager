@@ -44,10 +44,21 @@ body, html {
   color: #b0324f;
   padding: 15px 10px;
   font-family: 'Luckiest Guy';
+  cursor: pointer;
+}
+
+.logo a {
+  color: #b0324f;
+  text-decoration: none;
 }
 
 .navbar-dark .logo {
 	color: #fffdfe;
+}
+
+.navbar-dark .logo a {
+  color: #fffdfe;
+  text-decoration: none;
 }
 
 .dropdown-menu-hidden {
@@ -183,34 +194,53 @@ body, html {
 }
 
 .footer {
-  overflow: hidden;
-  padding: 30px 50px;
   background-color: #b0324f;
+  color: #f9f6f3;
 }
 
-.footer div {
+.footer-info-container {
+  overflow: hidden;
+  padding: 30px 50px;
+}
+
+.footer-info-container div {
   float: left;
 }
 
-.footer a, .footer p {
+.footer-info-container a, .footer-info-container p {
   display: block;
-  color: #f9f6f3;
   text-align: left;
   padding: 10px 56px;
   font-size: 14px;
-
+  color: #f9f6f3;
 }
 
-.footer p {
+.footer-info-container p {
   margin: 0
 }
 
-.footer a:hover {
+.footer-info-container a:hover {
   text-decoration: none;
 }
 
 .footer-icon {
   margin-right: 5px;
+}
+
+.made-by {
+  text-align: center;
+  padding: 5px;
+}
+
+.linked-in-link {
+  font-family: 'Rowdies';
+  color: #f9f6f3;
+  padding: 5px;
+  text-decoration: none;
+}
+
+.linked-in-link:hover {
+  color: #FFAE75;
 }
 
 @media screen and (max-width: 1100px) {
@@ -251,8 +281,17 @@ body, html {
     font-size: 1em;
   }
 
-  .footer p {
-	padding: 10px 0;
+  .footer-info-container {
+    padding: 20px 40px;
+  }
+
+  .footer-info-container p {
+  padding: 10px 0;
+  font-size: 11px;
+  }
+
+  .made-by {
+    font-size: 13px;
   }
 	#nav_links {
 		display: none;

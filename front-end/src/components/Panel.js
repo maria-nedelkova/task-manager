@@ -2,7 +2,7 @@ import React, { useRef, useLayoutEffect, useContext } from 'react'
 import { Task } from './Task'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faCopy, faPlus } from '@fortawesome/free-solid-svg-icons'
-import { Context } from './context'
+import { Context } from '../context'
 
 export const Panel = props => {
 

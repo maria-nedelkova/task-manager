@@ -1,8 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { App } from './App'
-import './MainPageIni.css'
-import './ListStyles.css'
-import './bg.jpg';
+import './styles/MainPageIni.css'
+import './styles/ListStyles.css'
 
 ReactDOM.render(<App />, document.getElementById('root'));

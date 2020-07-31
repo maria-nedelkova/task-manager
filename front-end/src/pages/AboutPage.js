@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
-import { ABOUT_ITEM1, ABOUT_ITEM2, ABOUT_ITEM3 } from '../Constants'
-import { AboutItem } from '../AboutItem'
+import { ABOUT_ITEM1, ABOUT_ITEM2, ABOUT_ITEM3 } from '../constants'
+import { AboutItem } from '../components/AboutItem'
 
 export const AboutPage = () => {
     useEffect(() => {

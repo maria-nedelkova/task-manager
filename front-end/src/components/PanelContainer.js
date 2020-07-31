@@ -27,7 +27,7 @@ export const PanelContainer = ({ lists, panelToHighlight, onAdd }) => {
     return columnHeight + 25                                                      // plus padding
   }
 
-  const calculateContainerHeight = panels => {
+  const calculateContainerHeight = () => {
     const width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
     const numberOfColumns = width > 1100 ? 4 :
       width <= 1100 && width > 900 ? 3 :
@@ -38,39 +38,39 @@ export const PanelContainer = ({ lists, panelToHighlight, onAdd }) => {
         width <= 900 && width > 600 ? 400 :
           300
     const columnsHeight = []
-    const heights = panels.map(panel => panel.height)
+    const heights = panelHeights.map(panel => panel.height)
     heights.unshift(40) // the first static panel
     for (let i = 0; i < numberOfColumns; i++) {
       columnsHeight[i] = calculateColumnHeight(heights, numberOfColumns, i)
     }
     const maxHeight = Math.max(...columnsHeight)
     const containerHeight = maxHeight > defaultHeight ? maxHeight : defaultHeight
-    return containerHeight  
+    return containerHeight
   }
 
   const pushPanelHeight = (id, height) => {
-    panelHeightsTemp.push({id, height})
-    if(panelHeightsTemp.length == lists.length) { //change state only once, after all panel heights have been pushed
+    panelHeightsTemp.push({ id, height })
+    if (panelHeightsTemp.length == lists.length) { //change state only once, after all panel heights have been pushed
       setPanelHeights(panelHeightsTemp)
     }
-    if(panelHeightsTemp.length == 1 && panelHeights.length) { //some panel is changed or new one is added
+    if (panelHeightsTemp.length == 1 && panelHeights.length) { //some panel is changed or new one is added
       const panel = panelHeights.find(panel => panel.id == id)
-      if(panel) {
-        const updatedPanelHeights = panelHeights.map(panel => panel.id == id ? { ...panel, height} : panel)
+      if (panel) {
+        const updatedPanelHeights = panelHeights.map(panel => panel.id == id ? { ...panel, height } : panel)
         setPanelHeights(updatedPanelHeights)
       } else {
         const addedList = lists.find(list => list.id == id)
         const index = lists.indexOf(addedList)
         const updatedPanelHeights = panelHeights.slice()
-        updatedPanelHeights.splice(index,0,{id,height})
+        updatedPanelHeights.splice(index, 0, { id, height })
         setPanelHeights(updatedPanelHeights)
       }
     }
   }
 
   const deletePanelHeight = id => {
-      const updatedPanelHeights = panelHeights.filter(panel => panel.id !== id)
-      setPanelHeights(updatedPanelHeights)
+    const updatedPanelHeights = panelHeights.filter(panel => panel.id !== id)
+    setPanelHeights(updatedPanelHeights)
   }
 
   const renderPanels = () => {
@@ -91,18 +91,17 @@ export const PanelContainer = ({ lists, panelToHighlight, onAdd }) => {
   }
 
   return (
-    <div className="bkground panel-container" style={{ height: calculateContainerHeight(panelHeights)}}>
-      
-        <div className="add-list panel"
-          onClick={onAdd.bind(null)}>
-          <FontAwesomeIcon icon={faPlus} className="plus-icon" />
-          <div className="add-text">Add a new list</div>
-        </div>
-        {renderPanels()}
-        <span className="panel break"></span>
-        <span className="panel break"></span>
-        <span className="panel break"></span>
-    
+    <div className="bkground panel-container" style={{ height: calculateContainerHeight() }}>
+      <div className="add-list panel"
+        onClick={onAdd.bind(null)}>
+        <FontAwesomeIcon icon={faPlus} className="plus-icon" />
+        <div className="add-text">Add a new list</div>
+      </div>
+      {renderPanels()}
+      <span className="panel break"></span>
+      <span className="panel break"></span>
+      <span className="panel break"></span>
+
     </div>
   );
 }

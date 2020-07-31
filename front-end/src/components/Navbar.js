@@ -21,8 +21,8 @@ export const Navbar = () => {
   
     return (
         <div className={topNavClassName}>
-            <div className="logo">
-                <FontAwesomeIcon icon={faEarlybirds} />Task Manager
+            <div className="logo shake-slow shake-freeze">
+                <NavLink to="/about"><FontAwesomeIcon icon={faEarlybirds} />Task Manager</NavLink>            
             </div>
             <div className={barClassName} onClick={handleMenuClick.bind(null)}>
                 <div className="bar1"></div>
