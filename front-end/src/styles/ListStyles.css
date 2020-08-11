@@ -38,7 +38,18 @@
  cursor: pointer;
 }
 
-.text-area-green {
+.text-area-empty {
+  width: 80%;
+  height: 32px;
+  padding: 7px 20px;
+  background-color: #e82c42;
+  border-radius: 3px;
+  outline: none;
+  float: left;
+  cursor: pointer;
+ }
+
+.text-area-crossed {
  width: 80%;
  padding: 7px 20px;
  background-color: #e82c42;
@@ -90,8 +101,7 @@
   float: right;
   width: 10%;
   text-align: center;
-  color: #fffdfe
-
+  color: #fffdfe;
 }
 
 .btn-icon {
@@ -130,23 +140,6 @@
   background-color: #e82c42;
   border-radius: 3px;
   cursor: pointer;
-
-}
-
-.btn-container {
-  overflow: hidden;
-  position: absolute;
-  top: 1px;
-  right: 1px;
-  visibility: hidden;
-}
-
-.btn-container-hover {
-  overflow: hidden;
-  position: absolute;
-  top: 1px;
-  right: 1px;
-  visibility: visible;
 }
 
 .panel-container {
@@ -240,6 +233,16 @@
   }
   .add-list {
     padding: 8px !important;
+  }
+  .add-list:hover, .add-task-btn:hover {
+    background-color: #ff3c53;
+  }
+  .list-btn:hover {
+    background-color: #ff3c53;
+  }
+  .text-area, .text-area-crossed, .text-area-empty {
+    width: 79%;
+    touch-action: none;
   }
   .break {display: none};
 }

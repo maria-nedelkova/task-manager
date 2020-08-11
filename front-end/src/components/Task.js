@@ -6,7 +6,7 @@ import { DeleteTaskButton, CheckButton } from './Buttons'
 export const Task = React.memo(props => {
 
   const { id, listID, isDone, text } = props
-  const contentClassName = isDone ? 'text-area-green' : 'text-area'
+  const contentClassName = text ? (isDone ? 'text-area-crossed' : 'text-area'):'text-area-empty'
   const disabled = isDone ? true : false
   const contentEditable = useRef(null);
   const { editTask } = useContext(Context)

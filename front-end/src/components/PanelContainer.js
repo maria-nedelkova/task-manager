@@ -32,10 +32,7 @@ export const PanelContainer = ({ lists, panelToHighlight, onAdd }) => {
       width <= 1100 && width > 900 ? 3 :
         width <= 900 && width > 600 ? 2 :
           1
-    const defaultHeight = width > 1100 ? 600 :
-      width <= 1100 && width > 900 ? 500 :
-        width <= 900 && width > 600 ? 400 :
-          300
+    const defaultHeight = 600
     const columnsHeight = []
     const heights = panelHeights.map(panel => panel.height)
     heights.unshift(40) // the first static panel

@@ -49,10 +49,12 @@ export const MyTasksPage = () => {
   const changeTaskStatus = (listID, taskID) => {
     const list = lists.find(list => list.id == listID)
     const task = list.tasks.find(task => task.id == taskID)
-    const updatedTasks = list.tasks.map(task => task.id == taskID ? { ...task, isDone: !task.isDone } : task)
-    const updatedLists = lists.map(list => list.id == listID ? { ...list, tasks: updatedTasks } : list)
-    setLists(updatedLists)
-    setPanelToHighlight('')
+    if(task.text){
+      const updatedTasks = list.tasks.map(task => task.id == taskID ? { ...task, isDone: !task.isDone } : task)
+      const updatedLists = lists.map(list => list.id == listID ? { ...list, tasks: updatedTasks } : list)
+      setLists(updatedLists)
+      setPanelToHighlight('')
+    }
   }
 
   const addList = () => {
