@@ -61,7 +61,6 @@ export const MyTasksPage = () => {
     updatedLists.unshift({ id, name: '', tasks: [] })
     setLists(updatedLists)
     setPanelToHighlight(id)
-
   }
 
   const copyList = id => {

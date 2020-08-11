@@ -1,15 +1,14 @@
 import React, { useRef, useLayoutEffect, useContext } from 'react'
 import { Task } from './Task'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash, faCopy, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { CopyListButton, AddTaskButton, DeleteListButton } from './Buttons'
 import { Context } from '../context'
 
-export const Panel = props => {
+export const Panel = React.memo(props => {
 
   const { id, name, highlight, tasks } = props
   const animation = highlight ? { animationName: 'highlight' } : {}
   const divPanel = useRef(null);
-  const { addTask, deleteList, copyList, editListName} = useContext(Context)
+  const { deleteList, editListName} = useContext(Context)
 
   useLayoutEffect(() => {
     const rect = divPanel.current.getBoundingClientRect()
@@ -51,24 +50,14 @@ export const Panel = props => {
                placeholder="Enter list name..." 
                className="list-name"
                value={name}
-               onChange={handleChange.bind(null, id)}
+               onChange={(event) => handleChange(id, event)}
         />
-        <div className="list-btn"
-          onClick={removeHandler.bind(null, id)}>
-          <FontAwesomeIcon icon={faTrash} className="btn-icon" />
-        </div>
-        <div className="list-btn"
-             onClick={copyList.bind(null,id)}>
-          <FontAwesomeIcon icon={faCopy} className="btn-icon" />
-        </div>
+        <DeleteListButton removeHandler={() => removeHandler(id)}/>
+        <CopyListButton id={id}/>
       </div>
       {renderTasks()}
-      <div className="add-task-btn list-row"
-        onClick={addTask.bind(null,id)}>
-        <FontAwesomeIcon icon={faPlus} className="plus-icon" />
-        <div className="add-text">Add a task</div>
-      </div>
+      <AddTaskButton id={id}/>
     </div>
   );
-}
+})
 

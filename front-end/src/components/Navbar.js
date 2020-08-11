@@ -24,14 +24,14 @@ export const Navbar = () => {
             <div className="logo shake-slow shake-freeze">
                 <NavLink to="/about"><FontAwesomeIcon icon={faEarlybirds} />Task Manager</NavLink>            
             </div>
-            <div className={barClassName} onClick={handleMenuClick.bind(null)}>
+            <div className={barClassName} onClick={handleMenuClick}>
                 <div className="bar1"></div>
                 <div className="bar2"></div>
                 <div className="bar3"></div>
             </div>
             <div className={dropDownClassName}>
-                <NavLink to="/about" onClick={handleMenuClick.bind(null)}>About</NavLink>
-                <NavLink to="/" onClick={handleMyTaskClick.bind(null)}>My Tasks</NavLink>
+                <NavLink to="/about" onClick={handleMenuClick}>About</NavLink>
+                <NavLink to="/" onClick={handleMyTaskClick}>My Tasks</NavLink>
             </div>
         </div>
     );

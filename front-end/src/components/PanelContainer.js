@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Panel } from './Panel'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { AddListButton } from './Buttons'
 
 export const PanelContainer = ({ lists, panelToHighlight, onAdd }) => {
 
@@ -92,16 +91,11 @@ export const PanelContainer = ({ lists, panelToHighlight, onAdd }) => {
 
   return (
     <div className="bkground panel-container" style={{ height: calculateContainerHeight() }}>
-      <div className="add-list panel"
-        onClick={onAdd.bind(null)}>
-        <FontAwesomeIcon icon={faPlus} className="plus-icon" />
-        <div className="add-text">Add a new list</div>
-      </div>
+      <AddListButton onAdd={onAdd}/>
       {renderPanels()}
       <span className="panel break"></span>
       <span className="panel break"></span>
       <span className="panel break"></span>
-
     </div>
   );
 }
