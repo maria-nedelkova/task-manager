@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Panel } from './Panel'
 import { AddListButton } from './Buttons'
 
@@ -6,14 +6,6 @@ export const PanelContainer = ({ lists, panelToHighlight, onAdd }) => {
 
   const panelHeightsTemp = []
   const [panelHeights, setPanelHeights] = useState([])
-
-  useEffect(() => {
-    const resizeListener = () => window.location.reload(true)
-    window.addEventListener('resize', resizeListener)
-    return () => {
-      window.removeEventListener('resize', resizeListener);
-    }
-  }, [])
 
   const calculateColumnHeight = (panelsHeight, numberOfColumns, position) => {
     let columnHeight = 0

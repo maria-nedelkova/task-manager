@@ -24,13 +24,16 @@ body, html {
   top: 0;
   z-index:2;
   box-shadow: 0px 20px 20px -20px #b0324f;
+  transition: background-color .2s ease-in-out;
 }
 
 .navbar-dark {
+  width: 100%;
   background-color: #b0324f;
 	position: sticky;
   top: 0;
   z-index:2;
+  transition: background-color .2s ease-in-out;
 }
 
 .clearfix::after {
@@ -40,26 +43,30 @@ body, html {
 }
 
 .logo {
-	float: left;
   font-size: 30px;
   color: #b0324f;
   padding: 15px 10px;
   font-family: 'Luckiest Guy';
   cursor: pointer;
+  transition: color .2s ease-in-out;
+  float: left;
 }
 
 .logo a {
   color: #b0324f;
   text-decoration: none;
+  transition: color .2s ease-in-out;
 }
 
 .navbar-dark .logo {
-	color: #fffdfe;
+  color: #fffdfe;
+  transition: color .2s ease-in-out;
 }
 
 .navbar-dark .logo a {
   color: #fffdfe;
   text-decoration: none;
+  transition: color .2s ease-in-out;
 }
 
 .dropdown-menu-hidden {
@@ -75,7 +82,7 @@ body, html {
 	pointer-events:none;
 	transform: translateY(-200%);
 	-webkit-transform: translateY(-200%);
-  transition: transform .1s ease-in-out;
+  transition: transform .2s ease-in-out;
 }
 
 .dropdown-menu-visible a, .dropdown-menu-hidden a {
@@ -105,15 +112,15 @@ body, html {
 	left: 0;
 	-webkit-transform: translateY(66px);
   transform: translateY(66px);
-  transition: transform .1s ease-in-out;
+  transition: transform .2s ease-in-out;
   pointer-events:auto;
   box-shadow: 0px 20px 20px -15px #b0324f;
 }
 
 .bar-container {
   cursor: pointer;
-	float: right;
-	padding: 15px 15px;
+  padding: 15px 15px;
+  float: right;
 }
 
 .bar1, .bar2, .bar3 {
@@ -154,7 +161,7 @@ body, html {
   color: #b0324f; 
   font-family: 'Rowdies';
   font-weight: bold;
-  width: 60%;
+  width: 70%;
   margin: auto;
   text-align: center;
 }
@@ -190,22 +197,15 @@ body, html {
   font-size: 0.9em;
 }
 
-.check-icon {
-  float: left;
-}
-
 .footer {
   background-color: #b0324f;
   color: #f9f6f3;
 }
 
 .footer-info-container {
-  overflow: hidden;
+  display: flex;
+  justify-content: flex-start;
   padding: 30px 50px;
-}
-
-.footer-info-container div {
-  float: left;
 }
 
 .footer-info-container a, .footer-info-container p {
@@ -252,10 +252,10 @@ body, html {
 
 @media screen and (max-width: 900px) {
   .about-info-header p{
-    font-size: 3em;
+    font-size: 2.5em;
   }
   .about-info-items {
-    font-size: 1.5em;
+    font-size: 2em;
   }
 }
 
@@ -276,10 +276,13 @@ body, html {
   }
   
   .about-info-header p{
-    font-size: 2em;
+    font-size: 1.5em;
+  }
+  .app-name {
+    font-size: 0.8em;
   }
   .about-info-items {
-    font-size: 1em;
+    font-size: 1.2em;
   }
 
   .footer-info-container {

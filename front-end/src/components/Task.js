@@ -21,7 +21,7 @@ export const Task = React.memo(props => {
   }
 
   return (
-    <div className="list-row">
+    <div className="list-row task-row">
       <ContentEditable
         innerRef={contentEditable}
         html={text}
@@ -29,8 +29,8 @@ export const Task = React.memo(props => {
         className={contentClassName}
         onChange={(event) => handleChange(listID, id, event)}
       />
-      <DeleteTaskButton listID={listID} taskID={id} />
       <CheckButton listID={listID} taskID={id} />
+      <DeleteTaskButton listID={listID} taskID={id} />
     </div>
   );
 })

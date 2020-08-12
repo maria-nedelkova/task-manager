@@ -8,21 +8,19 @@ export const Navbar = () => {
     const topNavClassName = dropDownVisible ? 'navbar-dark clearfix' : 'navbar clearfix'
     const dropDownClassName = dropDownVisible ? 'dropdown-menu-visible' : 'dropdown-menu-hidden'
     const barClassName = dropDownVisible ? 'bar-container bar-to-x' : 'bar-container'
-  
+
     const handleMenuClick = () => {
-      dropDownVisible ? setDropDownVisibility(false) : setDropDownVisibility(true)
+        dropDownVisible ? setDropDownVisibility(false) : setDropDownVisibility(true)
     }
 
     const handleMyTaskClick = () => {
-        setTimeout(() => {
-            dropDownVisible ? setDropDownVisibility(false) : setDropDownVisibility(true)
-        }, 500)
+        dropDownVisible ? setDropDownVisibility(false) : setDropDownVisibility(true)
     }
-  
+
     return (
         <div className={topNavClassName}>
             <div className="logo shake-slow shake-freeze">
-                <NavLink to="/about"><FontAwesomeIcon icon={faEarlybirds} />Task Manager</NavLink>            
+                <NavLink to="/about"><FontAwesomeIcon icon={faEarlybirds} />Task Manager</NavLink>
             </div>
             <div className={barClassName} onClick={handleMenuClick}>
                 <div className="bar1"></div>

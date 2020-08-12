@@ -12,7 +12,7 @@ export const AboutPage = () => {
             <div className="about-info">
                 <div className="about-info-header">
                     <p>Organize it all</p>
-                    <p>with <span className="app-name">Task Manger</span></p>
+                    <p>with <span className="app-name">Task Manager</span></p>
                 </div>
                 <ul className="about-info-items">
                     <AboutItem text={ABOUT_ITEM1} />

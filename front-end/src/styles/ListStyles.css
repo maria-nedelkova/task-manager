@@ -13,8 +13,6 @@
 
 .list-row {
   margin: 0 0 5px 0;
-  position: relative;
-  overflow: hidden;
 }
 
 .list-row:last-child {
@@ -34,8 +32,9 @@
  background-color: #e82c42;
  border-radius: 3px;
  outline: none;
- float: left;
+ align-self: flex-start;
  cursor: pointer;
+ margin-right: 2px;
 }
 
 .text-area-empty {
@@ -45,8 +44,9 @@
   background-color: #e82c42;
   border-radius: 3px;
   outline: none;
-  float: left;
+  align-self: flex-start;
   cursor: pointer;
+  margin-right: 2px;
  }
 
 .text-area-crossed {
@@ -57,7 +57,8 @@
  text-decoration: line-through;
  border-radius: 3px;
  outline: none;
- float: left;
+ align-self: flex-start;
+ margin-right: 2px;
 }
 
 .green-btn {
@@ -75,11 +76,15 @@
 }
 
 .list-header {
-  overflow: hidden;
+  display: flex;
+}
+
+.task-row {
+  display: flex;
 }
 
 .list-name {
-  float: left;
+  align-self: flex-start;
   height: 30px;
   padding: 8px;
   cursor: pointer;
@@ -89,6 +94,8 @@
   background-color: rgba(103, 95, 95, 0);
   border: none;
   outline: none;
+  width: 80%;
+  margin-right: 2px;
 }
 
 ::placeholder {
@@ -98,7 +105,7 @@
 }
 
 .list-btn {
-  float: right;
+  align-self: flex-end;
   width: 10%;
   text-align: center;
   color: #fffdfe;
@@ -127,7 +134,6 @@
   width: 130px;
   height: 30px;
   padding: 5px 10px;
-  float: left;
 }
 
 .add-text {
@@ -180,6 +186,7 @@
   margin: 0;
   content: "";
   padding: 0;
+  box-shadow: none;
 }
 
 @media screen and (max-width: 1100px) {
@@ -240,9 +247,8 @@
   .list-btn:hover {
     background-color: #ff3c53;
   }
-  .text-area, .text-area-crossed, .text-area-empty {
+  .text-area, .text-area-crossed, .text-area-empty, .list-name  {
     width: 79%;
-    touch-action: none;
   }
   .break {display: none};
 }

@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect, useContext } from 'react'
+import React, { useRef, useLayoutEffect, useContext, useEffect } from 'react'
 import { Task } from './Task'
 import { CopyListButton, AddTaskButton, DeleteListButton } from './Buttons'
 import { Context } from '../context'
@@ -9,6 +9,17 @@ export const Panel = React.memo(props => {
   const animation = highlight ? { animationName: 'highlight' } : {}
   const divPanel = useRef(null);
   const { deleteList, editListName} = useContext(Context)
+
+  useEffect(() => {
+    const resizeListener = () => {
+      const rect = divPanel.current.getBoundingClientRect()
+      props.pushPanelHeight(id, rect.height)
+    }
+    window.addEventListener('resize', resizeListener)
+    return () => {
+      window.removeEventListener('resize', resizeListener);
+    }
+  },[])
 
   useLayoutEffect(() => {
     const rect = divPanel.current.getBoundingClientRect()
@@ -52,8 +63,8 @@ export const Panel = React.memo(props => {
                value={name}
                onChange={(event) => handleChange(id, event)}
         />
-        <DeleteListButton removeHandler={() => removeHandler(id)}/>
         <CopyListButton id={id}/>
+        <DeleteListButton removeHandler={() => removeHandler(id)}/>
       </div>
       {renderTasks()}
       <AddTaskButton id={id}/>
