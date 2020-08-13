@@ -13,7 +13,7 @@ export const Panel = React.memo(props => {
   useEffect(() => {
     const resizeListener = () => {
       const rect = divPanel.current.getBoundingClientRect()
-      props.pushPanelHeight(id, rect.height)
+      props.updatePanelHeights(id, rect.height)
     }
     window.addEventListener('resize', resizeListener)
     return () => {

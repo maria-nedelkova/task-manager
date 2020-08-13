@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { Panel } from './Panel'
 import { AddListButton } from './Buttons'
 
@@ -6,6 +6,8 @@ export const PanelContainer = ({ lists, panelToHighlight, onAdd }) => {
 
   const panelHeightsTemp = []
   const [panelHeights, setPanelHeights] = useState([])
+  const panelHeightsRef= useRef({});
+  panelHeightsRef.current = panelHeights;
 
   const calculateColumnHeight = (panelsHeight, numberOfColumns, position) => {
     let columnHeight = 0
@@ -56,6 +58,11 @@ export const PanelContainer = ({ lists, panelToHighlight, onAdd }) => {
     }
   }
 
+  const updatePanelHeights = (id, height) => {
+    const updatedPanelHeights = panelHeightsRef.current.map(panel => panel.id == id ? { ...panel, height } : panel)
+    setPanelHeights(updatedPanelHeights)
+  }
+
   const deletePanelHeight = id => {
     const updatedPanelHeights = panelHeights.filter(panel => panel.id !== id)
     setPanelHeights(updatedPanelHeights)
@@ -72,6 +79,7 @@ export const PanelContainer = ({ lists, panelToHighlight, onAdd }) => {
           highlight={highlight}
           pushPanelHeight={pushPanelHeight}
           deletePanelHeight={deletePanelHeight}
+          updatePanelHeights={updatePanelHeights}
         />
       );
     });
