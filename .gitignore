@@ -109,4 +109,3 @@ dist
 back-end/.idea/back-end.iml
 *.pyc
 *.lock
-front-end/package-lock.json

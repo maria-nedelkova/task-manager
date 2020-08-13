@@ -9,7 +9,6 @@ module.exports = {
   output: {
 	path: __dirname + '/dist/taskManager', // Folder to store generated bundle
     filename: 'bundle.js',  // Name of generated bundle after build
-    publicPath: '/taskManager/' // public URL of the output directory when referenced in a browser
   },
 
   module: {  // where we defined file patterns and their loaders

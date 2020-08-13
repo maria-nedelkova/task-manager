@@ -4,7 +4,7 @@
   "description": "task manger",
   "main": "index.js",
   "scripts": {
-    "webpack": "webpack",
+    "build": "webpack",
     "start": "webpack-dev-server -d --history-api-fallback --inline --progress"
   },
   "author": "Maria",
