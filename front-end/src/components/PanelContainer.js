@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useLayoutEffect } from 'react'
 import { Panel } from './Panel'
 import { AddListButton } from './Buttons'
 
@@ -6,8 +6,16 @@ export const PanelContainer = ({ lists, panelToHighlight, onAdd }) => {
 
   const panelHeightsTemp = []
   const [panelHeights, setPanelHeights] = useState([])
+  const [panelHeight, setPanelHeight] = useState(['79%'])
   const panelHeightsRef= useRef({});
   panelHeightsRef.current = panelHeights;
+
+  useLayoutEffect(() => {
+    const panelContainer = document.getElementsByClassName('panel-container')[0];
+    if (panelContainer) {
+      setPanelHeight(calculateContainerHeight());
+    }
+  }, [panelHeights]);
 
   const calculateColumnHeight = (panelsHeight, numberOfColumns, position) => {
     let columnHeight = 0
@@ -21,21 +29,24 @@ export const PanelContainer = ({ lists, panelToHighlight, onAdd }) => {
   }
 
   const calculateContainerHeight = () => {
-    const width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+    const width = document.getElementsByClassName('panel-container')[0].getBoundingClientRect().width;
     const numberOfColumns = width > 1100 ? 4 :
       width <= 1100 && width > 900 ? 3 :
         width <= 900 && width > 600 ? 2 :
           1
-    const defaultHeight = 600
+    const defaultHeight = document.getElementsByClassName('panel-container')[0].getBoundingClientRect().height;
     const columnsHeight = []
     const heights = panelHeights.map(panel => panel.height)
     heights.unshift(40) // the first static panel
     for (let i = 0; i < numberOfColumns; i++) {
       columnsHeight[i] = calculateColumnHeight(heights, numberOfColumns, i)
     }
+    console.log('columns height ', columnsHeight);
     const maxHeight = Math.max(...columnsHeight)
+    console.log('defaultHeight ', defaultHeight)
+    console.log('maxHeight ', maxHeight)
     const containerHeight = maxHeight > defaultHeight ? maxHeight : defaultHeight
-    return containerHeight
+    return Math.round(containerHeight) + 'px'
   }
 
   const pushPanelHeight = (id, height) => {
@@ -87,7 +98,7 @@ export const PanelContainer = ({ lists, panelToHighlight, onAdd }) => {
   }
 
   return (
-    <div className="bkground panel-container" style={{ height: calculateContainerHeight() }}>
+    <div className="bkground panel-container" style={{height: panelHeight}}>
       <AddListButton onAdd={onAdd}/>
       {renderPanels()}
       <span className="panel break"></span>
