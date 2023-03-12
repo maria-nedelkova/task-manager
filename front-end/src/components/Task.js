@@ -1,24 +1,25 @@
-import React, { useRef, useEffect, useContext } from 'react'
-import ContentEditable from 'react-contenteditable'
-import { Context } from '../context'
-import { DeleteTaskButton, CheckButton } from './Buttons'
+import React, { useRef, useEffect, useContext } from 'react';
+import ContentEditable from 'react-contenteditable';
+import { Context } from '../context';
+import { DeleteTaskButton, CheckButton } from './Buttons';
 
-export const Task = React.memo(props => {
-
-  const { id, listID, isDone, text } = props
-  const contentClassName = text ? (isDone ? 'text-area-crossed' : 'text-area'):'text-area-empty'
-  const disabled = isDone ? true : false
+export const Task = React.memo((props) => {
+  const {
+    id, listID, isDone, text,
+  } = props;
+  const contentClassName = text ? (isDone ? 'text-area-crossed' : 'text-area') : 'text-area-empty';
+  const disabled = !!isDone;
   const contentEditable = useRef(null);
-  const { editTask } = useContext(Context)
+  const { editTask } = useContext(Context);
 
   useEffect(() => {
     contentEditable.current.focus();
-  }, [])
+  }, []);
 
   const handleChange = (listID, id, event) => {
-    const text = event.target.value
-    editTask(listID, id, text)
-  }
+    const text = event.target.value;
+    editTask(listID, id, text);
+  };
 
   return (
     <div className="list-row task-row">
@@ -33,4 +34,4 @@ export const Task = React.memo(props => {
       <DeleteTaskButton listID={listID} taskID={id} />
     </div>
   );
-})
+});
